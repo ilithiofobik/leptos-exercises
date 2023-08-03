@@ -28,13 +28,13 @@ impl IntoView for Color {
 
 #[component]
 fn App(cx: Scope) -> impl IntoView {
-    let (color, set_color) = create_signal(cx, Color::White);
+    let color = create_rw_signal(cx, Color::White);
     let next_color = move || Color::reverse(&color());
 
     view! { cx,
         <button
             on:click=move |_| {
-                set_color.update(|c| c.to_reversed() );
+                color.update(|c| c.to_reversed() );
             }
             class:red=move || matches!(color(), Color::Red)
         >
