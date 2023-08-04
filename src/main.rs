@@ -1,4 +1,5 @@
 use leptos::*;
+use chrono::{Local, Datelike};
 
 #[derive(Debug, Clone)]
 enum Color {
@@ -7,15 +8,15 @@ enum Color {
 }
 
 impl Color {
-    pub fn reverse(color: &Color) -> Color {
+    pub fn to_reversed(color: &Color) -> Color {
         match color {
             Color::Red => Color::White,
             Color::White => Color::Red
         }
     }
 
-    pub fn to_reversed(&mut self) {
-        *self = Color::reverse(self) 
+    pub fn reverse(&mut self) {
+        *self = Color::to_reversed(self) 
     }
 }
 
@@ -27,24 +28,38 @@ impl IntoView for Color {
 }
 
 #[component]
+fn Footer(cx: Scope) -> impl IntoView{ 
+    let year = Local::now().year();
+
+    view! { cx,
+        <footer>
+            <p class="copyright">
+                "©" { year } " Wojciech Sęk"
+            </p>
+        </footer>
+    }
+}
+
+#[component]
 fn App(cx: Scope) -> impl IntoView {
     let color = create_rw_signal(cx, Color::White);
-    let next_color = move || Color::reverse(&color());
+    let next_color = move || Color::to_reversed(&color());
 
     view! { cx,
         <button
             on:click=move |_| {
-                color.update(|c| c.to_reversed() );
+                color.update(|c| c.reverse() );
             }
             class:red=move || matches!(color(), Color::Red)
         >
-            "Click me: "
-            { color }
+            "Click me: " { color }
         </button>
+        
         <p>
-            "Next color: " 
-            { next_color }
+            "Next color: " { next_color }
         </p>
+
+        <Footer/>
     }
 }
 
