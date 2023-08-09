@@ -9,3 +9,12 @@ edition = "2021"
 leptos = { version = "0.4.8", features = ["csr", "nightly"] }
 chrono = { version = "0.4.26" }
 fastrand  = { version = "2.0.0" }
+
+[profile.wasm-release]
+inherits = "release"
+opt-level = 'z'
+lto = true
+codegen-units = 1
+
+[package.metadata.leptos]
+lib-profile-release = "wasm-release"
