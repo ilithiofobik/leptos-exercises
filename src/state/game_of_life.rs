@@ -21,9 +21,9 @@ impl GameState for GameOfLifeState {
         }
     }
 
-    fn next_state<I>(my_state: Self, neighs: I) -> Self
+    fn next_state<'a, I>(my_state: &'a Self, neighs: I) -> Self
     where
-        I: Iterator<Item = Self>,
+        I: Iterator<Item = &'a Self>,
     {
         let neigh_num = neighs.map(|s| usize::from(matches!(s, Self::Alive))).sum();
 

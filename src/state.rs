@@ -3,9 +3,10 @@ pub mod wildfire;
 
 pub trait GameState: Default + Copy {
     fn random() -> Self;
-    fn next_state<I>(my_state: Self, neighs: I) -> Self
+    fn next_state<'a, I>(my_state: &'a Self, neighs: I) -> Self
     where
-        I: Iterator<Item = Self>;
+        Self: 'a,
+        I: Iterator<Item = &'a Self>;
     fn to_color(&self) -> &'static str;
     fn automaton_name() -> &'static str;
 }

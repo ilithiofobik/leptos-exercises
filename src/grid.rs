@@ -19,6 +19,15 @@ enum InnerGrid {
     B,
 }
 
+impl InnerGrid {
+    fn flip(&mut self) {
+        *self = match self {
+            InnerGrid::A => InnerGrid::B,
+            InnerGrid::B => InnerGrid::A,
+        };
+    }
+}
+
 #[derive(Clone)]
 pub struct Grid<T> {
     inner_a: [[T; COLS]; ROWS],
@@ -47,10 +56,10 @@ impl<T: GameState> Grid<T> {
         }
     }
 
-    pub fn get(&self, row: usize, col: usize) -> T {
+    pub fn get(&self, row: usize, col: usize) -> &T {
         match self.current {
-            InnerGrid::A => self.inner_a[row][col],
-            InnerGrid::B => self.inner_b[row][col],
+            InnerGrid::A => &self.inner_a[row][col],
+            InnerGrid::B => &self.inner_b[row][col],
         }
     }
 
@@ -58,13 +67,6 @@ impl<T: GameState> Grid<T> {
         match self.current {
             InnerGrid::A => self.inner_b[row][col] = value,
             InnerGrid::B => self.inner_a[row][col] = value,
-        }
-    }
-
-    pub fn change_curr(&mut self) {
-        self.current = match self.current {
-            InnerGrid::A => InnerGrid::B,
-            InnerGrid::B => InnerGrid::A,
         }
     }
 
@@ -81,6 +83,6 @@ impl<T: GameState> Grid<T> {
                 self.set_prev(row, col, new_state);
             }
         }
-        self.change_curr();
+        self.current.flip();
     }
 }

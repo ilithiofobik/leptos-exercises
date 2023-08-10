@@ -26,9 +26,9 @@ impl GameState for WildFireState {
         }
     }
 
-    fn next_state<I>(my_state: Self, mut neighs: I) -> Self
+    fn next_state<'a, I>(my_state: &'a Self, mut neighs: I) -> Self
     where
-        I: Iterator<Item = Self>,
+        I: Iterator<Item = &'a Self>,
     {
         match my_state {
             Self::Dirt => {
@@ -45,11 +45,11 @@ impl GameState for WildFireState {
                     Self::Fire(10)
                 } else {
                     Self::Tree(n + 1)
-                } 
+                }
             }
             Self::Lightning => Self::Fire(10),
             Self::Fire(n) => {
-                if n == 0 {
+                if *n == 0 {
                     Self::Dirt
                 } else {
                     Self::Fire(n - 1)
@@ -61,7 +61,7 @@ impl GameState for WildFireState {
     fn to_color(&self) -> &'static str {
         match self {
             Self::Dirt => "black",
-            Self::Tree(n) => 
+            Self::Tree(n) => {
                 if *n < 5 {
                     "rgb(0,195,0)"
                 } else if *n < 10 {
@@ -71,8 +71,9 @@ impl GameState for WildFireState {
                 } else {
                     "rgb(60,255,60)"
                 }
+            }
             Self::Lightning => "white",
-            Self::Fire(n) => 
+            Self::Fire(n) => {
                 if *n > 10 {
                     "rgb(255,0,0)"
                 } else if *n > 6 {
@@ -82,6 +83,7 @@ impl GameState for WildFireState {
                 } else {
                     "rgb(195,0,0)"
                 }
+            }
         }
     }
 
