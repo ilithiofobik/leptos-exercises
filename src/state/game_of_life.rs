@@ -1,4 +1,4 @@
-use crate::state::IState;
+use crate::state::GameState;
 
 #[derive(Clone, Copy)]
 pub enum GameOfLifeState {
@@ -12,7 +12,7 @@ impl Default for GameOfLifeState {
     }
 }
 
-impl IState for GameOfLifeState {
+impl GameState for GameOfLifeState {
     fn random() -> Self {
         if fastrand::bool() {
             Self::Alive

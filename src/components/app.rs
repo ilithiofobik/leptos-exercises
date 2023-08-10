@@ -1,7 +1,7 @@
 use crate::components::footer::*;
 use crate::grid::*;
 use crate::state::wildfire::*;
-use crate::state::IState;
+use crate::state::GameState;
 use leptos::*;
 use std::time::Duration;
 

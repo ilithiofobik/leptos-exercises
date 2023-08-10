@@ -1,4 +1,4 @@
-use crate::state::IState;
+use crate::state::GameState;
 
 pub const ROWS: usize = 40;
 pub const COLS: usize = 120;
@@ -26,7 +26,7 @@ pub struct Grid<T> {
     current: InnerGrid,
 }
 
-impl<T: Default + Copy + IState> Grid<T> {
+impl<T: GameState> Grid<T> {
     pub fn random_grid() -> Grid<T> {
         let mut inner_a = [[T::default(); COLS]; ROWS];
         let mut inner_b = [[T::default(); COLS]; ROWS];

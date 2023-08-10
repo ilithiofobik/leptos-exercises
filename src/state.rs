@@ -1,7 +1,7 @@
 pub mod game_of_life;
 pub mod wildfire;
 
-pub trait IState: Default {
+pub trait GameState: Default + Copy {
     fn random() -> Self;
     fn next_state<I>(my_state: Self, neighs: I) -> Self
     where

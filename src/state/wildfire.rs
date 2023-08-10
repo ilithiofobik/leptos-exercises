@@ -1,4 +1,4 @@
-use crate::state::IState;
+use crate::state::GameState;
 
 const LIGHTNING_PPB: f64 = 0.0001;
 const REGROW_PPB: f64 = 0.001;
@@ -17,7 +17,7 @@ impl Default for WildFireState {
     }
 }
 
-impl IState for WildFireState {
+impl GameState for WildFireState {
     fn random() -> Self {
         if fastrand::bool() {
             Self::Tree(3)
