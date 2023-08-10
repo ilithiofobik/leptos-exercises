@@ -39,4 +39,8 @@ impl IState for GameOfLifeState {
             Self::Dead => "white",
         }
     }
+
+    fn automaton_name() -> &'static str {
+        "Conways's Game of Life"
+    }
 }

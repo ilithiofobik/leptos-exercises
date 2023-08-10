@@ -1,13 +1,14 @@
 use crate::components::footer::*;
 use crate::grid::*;
-use crate::state::game_of_life::*;
+use crate::state::wildfire::*;
 use crate::state::IState;
 use leptos::*;
 use std::time::Duration;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
-    let (r_grid, w_grid) = create_signal(cx, Grid::<GameOfLifeState>::random_grid());
+    type AutomatonState = WildFireState;
+    let (r_grid, w_grid) = create_signal(cx, Grid::<AutomatonState>::random_grid());
 
     let duration = Duration::from_millis(100);
     set_interval(
@@ -17,7 +18,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         duration,
     );
 
-    let cell_divs = (0..)
+    let cell_divs = (0..ROWS)
         .map(|row| {
             (0..COLS)
                 .map(|col| {
@@ -38,7 +39,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <h1>
-            "CONWAY'S GAME OF LIFE"
+            { AutomatonState::automaton_name() }
         </h1>
 
         <div

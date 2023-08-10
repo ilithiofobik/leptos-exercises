@@ -436,8 +436,8 @@ function __wbg_get_imports() {
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
         throw new Error(getStringFromWasm0(arg0, arg1));
     };
-    imports.wbg.__wbindgen_closure_wrapper195 = function(arg0, arg1, arg2) {
-        const ret = makeClosure(arg0, arg1, 75, __wbg_adapter_14);
+    imports.wbg.__wbindgen_closure_wrapper229 = function(arg0, arg1, arg2) {
+        const ret = makeClosure(arg0, arg1, 84, __wbg_adapter_14);
         return addHeapObject(ret);
     };
 
@@ -478,7 +478,7 @@ async function __wbg_init(input) {
     if (wasm !== undefined) return wasm;
 
     if (typeof input === 'undefined') {
-        input = new URL('leptos-exercises-a1d0d5c0cbb8f6a_bg.wasm', import.meta.url);
+        input = new URL('leptos-exercises-c97da62dd819bbe9_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
