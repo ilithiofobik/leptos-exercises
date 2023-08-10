@@ -1,13 +1,13 @@
 use crate::components::footer::*;
 use crate::grid::*;
-use crate::state::wildfire::*;
+use crate::state::day_n_night::*;
 use crate::state::GameState;
 use leptos::*;
 use std::time::Duration;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
-    type AutomatonState = WildFireState;
+    type AutomatonState = DayNNightState;
     let (r_grid, w_grid) = create_signal(cx, Grid::<AutomatonState>::random_grid());
 
     let duration = Duration::from_millis(100);

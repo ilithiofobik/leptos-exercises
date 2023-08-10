@@ -1,5 +1,6 @@
 pub mod game_of_life;
 pub mod wildfire;
+pub mod day_n_night;
 
 pub trait GameState: Default + Copy {
     fn random() -> Self;
