@@ -1,4 +1,5 @@
 use crate::state::GameState;
+use crate::utils::rand::geo;
 use leptos::*;
 
 const LIGHTNING_PPB: f64 = 0.0001;
@@ -29,25 +30,21 @@ const LIGHT_COLOR: &str = "white";
 
 #[derive(Clone, Copy)]
 pub enum WildFireState {
-    Tree(usize),
-    Dirt,
+    Tree(usize, usize),
+    Dirt(usize),
     Fire(usize),
     Lightning,
 }
 
 impl Default for WildFireState {
     fn default() -> Self {
-        Self::Dirt
+        Self::Dirt(10000)
     }
 }
 
 impl GameState for WildFireState {
     fn random() -> Self {
-        if fastrand::bool() {
-            Self::Tree(TREE_STEP1)
-        } else {
-            Self::Dirt
-        }
+        Self::Dirt(geo(REGROW_PPB))
     }
 
     fn next_state<'a, I>(
@@ -59,19 +56,19 @@ impl GameState for WildFireState {
         I: Iterator<Item = &'a Self>,
     {
         match my_state {
-            Self::Dirt => {
-                if fastrand::f64() < REGROW_PPB {
-                    w_color.set(TREE_COLOR1);
-                    Self::Tree(TREE_STEP1)
-                } else {
-                    Self::Dirt
-                }
+            Self::Dirt(0) => {
+                w_color.set(TREE_COLOR1);
+                Self::Tree(TREE_STEP1, geo(LIGHTNING_PPB))
             }
-            Self::Tree(n) => {
-                if fastrand::f64() < LIGHTNING_PPB {
-                    w_color.set(LIGHT_COLOR);
-                    Self::Lightning
-                } else if neighs.any(|s| matches!(s, Self::Fire(_))) {
+            Self::Dirt(n) => Self::Dirt(n - 1),
+
+            Self::Tree(_, 0) => {
+                w_color.set(LIGHT_COLOR);
+                Self::Lightning
+            }
+
+            Self::Tree(n, k) => {
+                if neighs.any(|s| matches!(s, Self::Fire(_))) {
                     w_color.set(FIRE_COLOR4);
                     Self::Fire(FIRE_STEP4)
                 } else {
@@ -81,34 +78,35 @@ impl GameState for WildFireState {
                         TREE_STEP4 => w_color.set(TREE_COLOR4),
                         _ => (),
                     }
-                    Self::Tree(n + 1)
+                    Self::Tree(n + 1, k - 1)
                 }
             }
+
             Self::Lightning => {
                 w_color.set(FIRE_COLOR4);
                 Self::Fire(FIRE_STEP4)
             }
+
+            Self::Fire(0) => {
+                w_color.set(DIRT_COLOR);
+                Self::Dirt(geo(REGROW_PPB))
+            }
             Self::Fire(n) => {
-                if *n == 0 {
-                    w_color.set(DIRT_COLOR);
-                    Self::Dirt
-                } else {
-                    match *n {
-                        FIRE_STEP3 => w_color.set(FIRE_COLOR3),
-                        FIRE_STEP2 => w_color.set(FIRE_COLOR2),
-                        FIRE_STEP1 => w_color.set(FIRE_COLOR1),
-                        _ => (),
-                    }
-                    Self::Fire(n - 1)
+                match *n {
+                    FIRE_STEP3 => w_color.set(FIRE_COLOR3),
+                    FIRE_STEP2 => w_color.set(FIRE_COLOR2),
+                    FIRE_STEP1 => w_color.set(FIRE_COLOR1),
+                    _ => (),
                 }
+                Self::Fire(n - 1)
             }
         }
     }
 
     fn to_color(&self) -> &'static str {
         match self {
-            Self::Dirt => DIRT_COLOR,
-            Self::Tree(_) => TREE_COLOR1,
+            Self::Dirt(_) => DIRT_COLOR,
+            Self::Tree(_, _) => TREE_COLOR1,
             Self::Lightning => LIGHT_COLOR,
             Self::Fire(_) => FIRE_COLOR1,
         }
