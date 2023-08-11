@@ -7,15 +7,15 @@ pub fn Cell(
     cx: Scope,
     row: usize,
     col: usize,
-    size: usize,
+    r_size: ReadSignal<usize>,
     r_color: ReadSignal<&'static str>,
 ) -> impl IntoView {
     view! { cx,
         <rect
-            x=col*size
-            y=row*size
-            width=size
-            height=size
+            x=move || col * r_size()
+            y=move || row * r_size()
+            width=r_size
+            height=r_size
             style:fill=r_color
             style:stroke-width=1
             style:stroke=GRAY

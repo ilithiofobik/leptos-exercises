@@ -4,7 +4,7 @@ use crate::state::{wildfire::*, GameState};
 use leptos::*;
 use std::time::Duration;
 
-const SIZE: usize = 20;
+const DURATION: Duration = Duration::from_millis(25); // 40fps
 
 #[component]
 pub fn Grid(cx: Scope) -> impl IntoView {
@@ -13,20 +13,23 @@ pub fn Grid(cx: Scope) -> impl IntoView {
     let rand_grid = Grid::<AutomatonState>::random_grid(cx);
     let (r_grid, w_grid) = create_signal(cx, rand_grid);
 
-    let duration = Duration::from_millis(50);
     set_interval(
         move || {
             w_grid.update(|grid| grid.game_move());
         },
-        duration,
+        DURATION,
     );
+
+    let size = || window().inner_width().unwrap().as_f64().unwrap() as usize / COLS;
+    let (r_size, w_size) = create_signal(cx, size());
+    window_event_listener(ev::resize, move |_: ev::UiEvent| w_size(size()));
 
     let cell_divs = (0..ROWS)
         .map(|row| {
             (0..COLS)
                 .map(|col| {
                     view! { cx,
-                        <Cell row=row col=col size=SIZE r_color=r_grid().r_colors[row][col]/>
+                        <Cell row=row col=col r_size=r_size r_color=r_grid().r_colors[row][col]/>
                     }
                 })
                 .collect_view(cx)
@@ -39,8 +42,8 @@ pub fn Grid(cx: Scope) -> impl IntoView {
         </h1>
 
         <svg
-            width=COLS*SIZE
-            height=ROWS*SIZE
+            width=move || COLS * r_size()
+            height=move || ROWS * r_size()
         >
             { cell_divs }
         </svg>

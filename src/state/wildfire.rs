@@ -30,9 +30,9 @@ const LIGHT_COLOR: &str = "white";
 
 #[derive(Clone, Copy)]
 pub enum WildFireState {
-    Tree(usize, usize),
-    Dirt(usize),
-    Fire(usize),
+    Tree(usize, usize), // (growth, steps_to_lightning)
+    Dirt(usize),        // (steps_to_tree)
+    Fire(usize),        // (steps_to_dirt)
     Lightning,
 }
 
