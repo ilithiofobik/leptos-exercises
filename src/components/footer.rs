@@ -7,7 +7,7 @@ pub fn Footer(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <footer>
-            <p>
+            <p class="text-sm text-violet-900">
                 "©" { year } " Wojciech Sęk"
             </p>
         </footer>

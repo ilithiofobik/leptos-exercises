@@ -37,7 +37,7 @@ pub fn Grid(cx: Scope) -> impl IntoView {
         .collect_view(cx);
 
     view! { cx,
-        <h1>
+        <h1 class="p-6 text-4xl text-center font-bold">
             { AutomatonState::automaton_name() }
         </h1>
 
