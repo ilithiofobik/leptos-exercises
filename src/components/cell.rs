@@ -1,15 +1,24 @@
 use leptos::*;
 
+const GRAY: &str = "rgb(127,127,127)";
+
 #[component]
-pub fn Cell(cx: Scope, r_color: ReadSignal<&'static str>) -> impl IntoView {
+pub fn Cell(
+    cx: Scope,
+    row: usize,
+    col: usize,
+    size: usize,
+    r_color: ReadSignal<&'static str>,
+) -> impl IntoView {
     view! { cx,
-        <div
-            style:width = move || 20
-            style:height = move || 20
-            style:background-color={r_color}
-            style:border = "1px solid #595959"
-        >
-            <br/>
-        </div>
+        <rect
+            x=col*size
+            y=row*size
+            width=size
+            height=size
+            style:fill=r_color
+            style:stroke-width=1
+            style:stroke=GRAY
+        />
     }
 }

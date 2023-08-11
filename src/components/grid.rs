@@ -4,6 +4,8 @@ use crate::state::{wildfire::*, GameState};
 use leptos::*;
 use std::time::Duration;
 
+const SIZE: usize = 20;
+
 #[component]
 pub fn Grid(cx: Scope) -> impl IntoView {
     type AutomatonState = WildFireState;
@@ -24,7 +26,7 @@ pub fn Grid(cx: Scope) -> impl IntoView {
             (0..COLS)
                 .map(|col| {
                     view! { cx,
-                        <Cell r_color=r_grid().r_colors[row][col]/>
+                        <Cell row=row col=col size=SIZE r_color=r_grid().r_colors[row][col]/>
                     }
                 })
                 .collect_view(cx)
@@ -36,10 +38,11 @@ pub fn Grid(cx: Scope) -> impl IntoView {
             { AutomatonState::automaton_name() }
         </h1>
 
-        <div
-            class:grid=true
+        <svg
+            width=COLS*SIZE
+            height=ROWS*SIZE
         >
             { cell_divs }
-        </div>
+        </svg>
     }
 }
