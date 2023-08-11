@@ -4,11 +4,10 @@ pub mod wildfire;
 use leptos::*;
 
 pub trait GameState: Default + Copy {
-    fn random() -> Self;
+    fn random() -> (Self, &'static str);
     fn next_state<'a, I>(my_state: &'a Self, neighs: I, w_color: WriteSignal<&'static str>) -> Self
     where
         Self: 'a,
         I: Iterator<Item = &'a Self>;
-    fn to_color(&self) -> &'static str;
     fn automaton_name() -> &'static str;
 }

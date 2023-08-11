@@ -52,11 +52,11 @@ impl<T: GameState> Grid<T> {
             let mut w_row = Vec::with_capacity(COLS);
 
             for col in 0..COLS {
-                let rand_val = T::random();
+                let (rand_val, rand_color) = T::random();
                 inner_a[row][col] = rand_val;
                 inner_b[row][col] = rand_val;
 
-                let (r_color, w_color) = create_signal(cx, rand_val.to_color());
+                let (r_color, w_color) = create_signal(cx, rand_color);
                 r_row.push(r_color);
                 w_row.push(w_color);
             }
@@ -74,14 +74,14 @@ impl<T: GameState> Grid<T> {
         }
     }
 
-    pub fn get(&self, row: usize, col: usize) -> &T {
+    fn get(&self, row: usize, col: usize) -> &T {
         match self.current {
             InnerGrid::A => &self.inner_a[row][col],
             InnerGrid::B => &self.inner_b[row][col],
         }
     }
 
-    pub fn set_prev(&mut self, row: usize, col: usize, value: T) {
+    fn set_prev(&mut self, row: usize, col: usize, value: T) {
         match self.current {
             InnerGrid::A => self.inner_b[row][col] = value,
             InnerGrid::B => self.inner_a[row][col] = value,

@@ -17,11 +17,11 @@ impl Default for DayNNightState {
 }
 
 impl GameState for DayNNightState {
-    fn random() -> Self {
+    fn random() -> (Self, &'static str) {
         if fastrand::bool() {
-            Self::Day
+            (Self::Day, DAY_COLOR)
         } else {
-            Self::Night
+            (Self::Night, NIGHT_COLOR)
         }
     }
 
@@ -46,13 +46,6 @@ impl GameState for DayNNightState {
                 }
                 _ => Self::Night,
             },
-        }
-    }
-
-    fn to_color(&self) -> &'static str {
-        match self {
-            Self::Day => "yellow",
-            Self::Night => "black",
         }
     }
 

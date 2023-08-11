@@ -17,11 +17,11 @@ impl Default for GameOfLifeState {
 }
 
 impl GameState for GameOfLifeState {
-    fn random() -> Self {
+    fn random() -> (Self, &'static str) {
         if fastrand::bool() {
-            Self::Alive
+            (Self::Alive, ALIVE_COLOR)
         } else {
-            Self::Dead
+            (Self::Dead, DEAD_COLOR)
         }
     }
 
@@ -46,13 +46,6 @@ impl GameState for GameOfLifeState {
                 }
                 _ => Self::Dead,
             },
-        }
-    }
-
-    fn to_color(&self) -> &'static str {
-        match self {
-            Self::Alive => ALIVE_COLOR,
-            Self::Dead => DEAD_COLOR,
         }
     }
 

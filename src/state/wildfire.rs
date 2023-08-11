@@ -5,9 +5,9 @@ use leptos::*;
 const LIGHTNING_PPB: f64 = 0.0001;
 const REGROW_PPB: f64 = 0.001;
 
-const FIRE_COLOR1: &str = "rgb(195,0,0)";
-const FIRE_COLOR2: &str = "rgb(215,0,0)";
-const FIRE_COLOR3: &str = "rgb(235,0,0)";
+const FIRE_COLOR1: &str = "rgb(165,0,0)";
+const FIRE_COLOR2: &str = "rgb(195,0,0)";
+const FIRE_COLOR3: &str = "rgb(225,0,0)";
 const FIRE_COLOR4: &str = "rgb(255,0,0)";
 
 const FIRE_STEP1: usize = 6;
@@ -15,9 +15,9 @@ const FIRE_STEP2: usize = 2 * FIRE_STEP1;
 const FIRE_STEP3: usize = 3 * FIRE_STEP1;
 const FIRE_STEP4: usize = 4 * FIRE_STEP1;
 
-const TREE_COLOR1: &str = "rgb(0,195,0)";
-const TREE_COLOR2: &str = "rgb(20,215,20)";
-const TREE_COLOR3: &str = "rgb(40,235,40)";
+const TREE_COLOR1: &str = "rgb(0,165,0)";
+const TREE_COLOR2: &str = "rgb(20,295,20)";
+const TREE_COLOR3: &str = "rgb(40,225,40)";
 const TREE_COLOR4: &str = "rgb(60,255,60)";
 
 const TREE_STEP1: usize = 10;
@@ -43,8 +43,8 @@ impl Default for WildFireState {
 }
 
 impl GameState for WildFireState {
-    fn random() -> Self {
-        Self::Dirt(geo(REGROW_PPB))
+    fn random() -> (Self, &'static str) {
+        (Self::Dirt(geo(REGROW_PPB)), DIRT_COLOR)
     }
 
     fn next_state<'a, I>(
@@ -100,15 +100,6 @@ impl GameState for WildFireState {
                 }
                 Self::Fire(n - 1)
             }
-        }
-    }
-
-    fn to_color(&self) -> &'static str {
-        match self {
-            Self::Dirt(_) => DIRT_COLOR,
-            Self::Tree(_, _) => TREE_COLOR1,
-            Self::Lightning => LIGHT_COLOR,
-            Self::Fire(_) => FIRE_COLOR1,
         }
     }
 
