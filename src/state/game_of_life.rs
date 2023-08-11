@@ -1,4 +1,8 @@
 use crate::state::GameState;
+use leptos::*;
+
+const ALIVE_COLOR: &str = "red";
+const DEAD_COLOR: &str = "white";
 
 #[derive(Clone, Copy)]
 pub enum GameOfLifeState {
@@ -21,22 +25,34 @@ impl GameState for GameOfLifeState {
         }
     }
 
-    fn next_state<'a, I>(my_state: &'a Self, neighs: I) -> Self
+    fn next_state<'a, I>(my_state: &'a Self, neighs: I, w_color: WriteSignal<&'static str>) -> Self
     where
         I: Iterator<Item = &'a Self>,
     {
         let neigh_num = neighs.map(|s| usize::from(matches!(s, Self::Alive))).sum();
 
-        match (neigh_num, my_state) {
-            (3, _) | (2, Self::Alive) => Self::Alive,
-            _ => Self::Dead,
+        match my_state {
+            Self::Alive => match neigh_num {
+                2 | 3 => Self::Alive,
+                _ => {
+                    w_color.set(DEAD_COLOR);
+                    Self::Dead
+                }
+            },
+            Self::Dead => match neigh_num {
+                3 => {
+                    w_color.set(ALIVE_COLOR);
+                    Self::Alive
+                }
+                _ => Self::Dead,
+            },
         }
     }
 
     fn to_color(&self) -> &'static str {
         match self {
-            Self::Alive => "red",
-            Self::Dead => "white",
+            Self::Alive => ALIVE_COLOR,
+            Self::Dead => DEAD_COLOR,
         }
     }
 
