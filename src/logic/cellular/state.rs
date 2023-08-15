@@ -1,6 +1,3 @@
-pub mod day_n_night;
-pub mod game_of_life;
-pub mod wildfire;
 use leptos::*;
 
 pub trait GameState: Default + Copy {

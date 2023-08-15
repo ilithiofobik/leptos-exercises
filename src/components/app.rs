@@ -1,5 +1,5 @@
+use crate::components::cellular::grid::Grid;
 use crate::components::footer::Footer;
-use crate::components::grid::Grid;
 use leptos::*;
 
 #[component]

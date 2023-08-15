@@ -1,4 +1,4 @@
-use crate::state::GameState;
+use crate::logic::cellular::state::GameState;
 use leptos::*;
 
 pub const ROWS: usize = 40;

@@ -1,8 +1,8 @@
-use crate::state::GameState;
+use crate::logic::cellular::state::GameState;
 use leptos::*;
 
-const ALIVE_COLOR: &str = "red";
-const DEAD_COLOR: &str = "white";
+const ALIVE_COLOR: &str = "#b62203";
+const DEAD_COLOR: &str = "#F5F5DC";
 
 #[derive(Clone, Copy)]
 pub enum GameOfLifeState {

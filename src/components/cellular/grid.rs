@@ -1,6 +1,7 @@
-use crate::components::cell::*;
+use crate::components::cellular::cell::Cell;
 use crate::grid::*;
-use crate::state::{wildfire::*, GameState};
+use crate::logic::cellular::state::*;
+use crate::logic::cellular::wildfire::*;
 use leptos::*;
 use std::time::Duration;
 

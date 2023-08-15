@@ -1,8 +1,8 @@
-use crate::state::GameState;
+use crate::logic::cellular::state::GameState;
 use leptos::*;
 
-const DAY_COLOR: &str = "yellow";
-const NIGHT_COLOR: &str = "black";
+const DAY_COLOR: &str = "#4fc4ff";
+const NIGHT_COLOR: &str = "#280540";
 
 #[derive(Clone, Copy)]
 pub enum DayNNightState {

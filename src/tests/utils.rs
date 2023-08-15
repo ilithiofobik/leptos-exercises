@@ -4,12 +4,17 @@ fn geo_distr_test() {
 
     let num_of_exps = 10_000_000;
     let num_of_exps_f = num_of_exps as f64;
-    let tol = 0.01;
-    let expected = [(1, 0.5), (2, 0.25), (3, 0.125), (4, 0.0625), (5, 0.03125)];
-    let exps: Vec<usize> = (0..num_of_exps).map(|_| geo(0.5)).collect();
-    for (ev, er) in expected {
-        let ratio = exps.iter().filter(|&&l| l == ev).count() as f64 / num_of_exps_f;
-        let rel_err = (ratio - er).abs() / er;
-        assert!(rel_err < tol);
+    let tol = 0.05;
+    let ps = [0.25, 0.5, 0.75];
+    let ks = [1, 2, 4];
+
+    for p in ps {
+        let exps: Vec<i32> = (0..num_of_exps).map(|_| geo(p) as i32).collect();
+        for k in ks {
+            let er = p * (1.0 - p).powi(k - 1) * num_of_exps_f;
+            let rr = exps.iter().filter(|&&l| l == k).count() as f64;
+            let abs_err = (rr - er).abs();
+            assert!(abs_err < tol * er);
+        }
     }
 }

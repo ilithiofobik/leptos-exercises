@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 leptos = { version = "0.4.8", features = ["csr", "nightly"] }
+leptos_router = { version = "0.4.8", features = ["csr", "nightly"] }
 chrono = { version = "0.4.26" }
 fastrand  = { version = "2.0.0" }
 

@@ -1,32 +1,32 @@
-use crate::state::GameState;
+use crate::logic::cellular::state::GameState;
 use crate::utils::rand::geo;
 use leptos::*;
 
 const LIGHTNING_PPB: f64 = 0.0001;
 const REGROW_PPB: f64 = 0.001;
 
-const FIRE_COLOR1: &str = "rgb(165,0,0)";
-const FIRE_COLOR2: &str = "rgb(195,0,0)";
-const FIRE_COLOR3: &str = "rgb(225,0,0)";
-const FIRE_COLOR4: &str = "rgb(255,0,0)";
+const FIRE_COLOR1: &str = "#801100";
+const FIRE_COLOR2: &str = "#b62203";
+const FIRE_COLOR3: &str = "#ff7500";
+const FIRE_COLOR4: &str = "#fac000";
 
 const FIRE_STEP1: usize = 6;
 const FIRE_STEP2: usize = 2 * FIRE_STEP1;
 const FIRE_STEP3: usize = 3 * FIRE_STEP1;
 const FIRE_STEP4: usize = 4 * FIRE_STEP1;
 
-const TREE_COLOR1: &str = "rgb(0,165,0)";
-const TREE_COLOR2: &str = "rgb(20,295,20)";
-const TREE_COLOR3: &str = "rgb(40,225,40)";
-const TREE_COLOR4: &str = "rgb(60,255,60)";
+const TREE_COLOR1: &str = "#145a32";
+const TREE_COLOR2: &str = "#196f3d";
+const TREE_COLOR3: &str = "#1e8449";
+const TREE_COLOR4: &str = "#229954";
 
 const TREE_STEP1: usize = 10;
 const TREE_STEP2: usize = 2 * TREE_STEP1;
 const TREE_STEP3: usize = 3 * TREE_STEP1;
 const TREE_STEP4: usize = 4 * TREE_STEP1;
 
-const DIRT_COLOR: &str = "black";
-const LIGHT_COLOR: &str = "white";
+const DIRT_COLOR: &str = "#000000";
+const LIGHT_COLOR: &str = "#FFFFFF";
 
 #[derive(Clone, Copy)]
 pub enum WildFireState {

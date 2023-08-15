@@ -23,6 +23,7 @@ jobs:
       - name: Trunk Build
         run: |
           rustup target add wasm32-unknown-unknown
+          cargo test
           trunk build --release
 
       - name: Install Vercel CLI
